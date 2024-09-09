@@ -38,4 +38,10 @@ public class FaculdadeResource {
         List<Aluno> alunos = faculdadeService.listarTodosFechados();
         return ResponseEntity.ok().body(alunos);
     }
+
+    @GetMapping
+    public List<Aluno> findAll() {
+        List<Aluno> aluno = faculdadeService.findAll();
+        return aluno;
+    }
 }

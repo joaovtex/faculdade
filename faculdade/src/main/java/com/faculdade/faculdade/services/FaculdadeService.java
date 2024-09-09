@@ -27,4 +27,9 @@ public class FaculdadeService {
         List<Aluno> alunos = alunoRepository.listarTodosFechados();
         return alunos;
     }
+
+    public List<Aluno> findAll() {
+        List<Aluno> alunos = alunoRepository.findAll();
+        return alunos;
+    }
 }
