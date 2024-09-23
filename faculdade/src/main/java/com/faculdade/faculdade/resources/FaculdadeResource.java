@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 33600)
 @RestController
 @RequestMapping(value = "/faculdade")
 public class FaculdadeResource {
@@ -65,7 +66,7 @@ public class FaculdadeResource {
 
     @PutMapping (value = "/{ra}")
     public ResponseEntity<Aluno> update (@PathVariable Integer ra, @RequestBody Aluno aluno) {
-        aluno.getRa(ra);
+        aluno.setRa(ra);
         aluno = faculdadeService.updateAluno(ra, aluno);
         return ResponseEntity.ok().body(aluno);
     }
