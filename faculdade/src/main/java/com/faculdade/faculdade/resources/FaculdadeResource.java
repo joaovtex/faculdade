@@ -65,7 +65,7 @@ public class FaculdadeResource {
 
     @PutMapping (value = "/{ra}")
     public ResponseEntity<Aluno> update (@PathVariable Integer ra, @RequestBody Aluno aluno) {
-        aluno.getRa(ra);
+        aluno.setRa(ra);
         aluno = faculdadeService.updateAluno(ra, aluno);
         return ResponseEntity.ok().body(aluno);
     }
