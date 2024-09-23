@@ -53,7 +53,7 @@ public class FaculdadeResource {
     @PostMapping
     public ResponseEntity<Aluno> gravarAluno(@RequestBody Aluno aluno) {
         aluno = faculdadeService.gravarAluno(aluno);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{ra}").buildAndExpand(aluno.getRa(ra)).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{ra}").buildAndExpand(aluno.getRa()).toUri();
         return ResponseEntity.created(uri).body(aluno);
     }
 
