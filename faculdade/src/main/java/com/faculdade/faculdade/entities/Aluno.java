@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity (name = "alunos")
 
@@ -33,8 +32,8 @@ public class Aluno implements Serializable {
         this.ativo = ativo;
     }
 
-    public int getRa() {
-        return ra;
+    public int getRa(Integer ra) {
+        return this.ra;
     }
 
     public void setRa(int ra) {

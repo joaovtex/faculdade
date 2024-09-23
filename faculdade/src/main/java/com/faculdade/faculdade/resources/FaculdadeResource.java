@@ -4,11 +4,10 @@ import com.faculdade.faculdade.entities.Aluno;
 import com.faculdade.faculdade.services.FaculdadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -43,5 +42,31 @@ public class FaculdadeResource {
     public List<Aluno> findAll() {
         List<Aluno> aluno = faculdadeService.findAll();
         return aluno;
+    }
+
+    @GetMapping (value = "/nome/{nome}")
+    public Aluno findByNome(@PathVariable String nome) {
+        Aluno aluno = faculdadeService.findByNome(nome);
+        return ResponseEntity.ok().body(aluno).getBody();
+    }
+
+    @PostMapping
+    public ResponseEntity<Aluno> gravarAluno(@RequestBody Aluno aluno) {
+        aluno = faculdadeService.gravarAluno(aluno);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{ra}").buildAndExpand(aluno.getRa(ra)).toUri();
+        return ResponseEntity.created(uri).body(aluno);
+    }
+
+    @DeleteMapping (value = "/{ra}")
+    public ResponseEntity<Void> deletar (@PathVariable Integer ra) {
+        faculdadeService.deletar(ra);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping (value = "/{ra}")
+    public ResponseEntity<Aluno> update (@PathVariable Integer ra, @RequestBody Aluno aluno) {
+        aluno.getRa(ra);
+        aluno = faculdadeService.updateAluno(ra, aluno);
+        return ResponseEntity.ok().body(aluno);
     }
 }
