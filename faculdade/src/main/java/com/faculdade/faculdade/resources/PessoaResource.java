@@ -1,15 +1,15 @@
 package com.faculdade.faculdade.resources;
+import com.faculdade.faculdade.entities.Aluno;
 import com.faculdade.faculdade.entities.Pessoa;
 import com.faculdade.faculdade.repositories.PessoaRepository;
 import com.faculdade.faculdade.services.FaculdadeService;
 import com.faculdade.faculdade.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,5 +35,25 @@ public class PessoaResource {
     public Pessoa findbyCpf(@PathVariable String cpf) {
         Pessoa pessoa = pessoaService.findByCpf(cpf);
         return ResponseEntity.ok().body(pessoa).getBody();
+    }
+
+    @PostMapping
+    public ResponseEntity<Pessoa> gravarPessoa(@RequestBody Pessoa pessoa) {
+        pessoa = pessoaService.gravarPessoa(pessoa);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pessoa.getId()).toUri();
+        return ResponseEntity.created(uri).body(pessoa);
+    }
+
+    @DeleteMapping (value = "/{id}")
+    public ResponseEntity<Void> deletar (@PathVariable Integer id) {
+        pessoaService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping (value = "/{id}")
+    public ResponseEntity<Pessoa> update (@PathVariable Integer id, @RequestBody Pessoa pessoa) {
+        pessoa.setId(id);
+        pessoa = pessoaService.updatePessoa(id, pessoa);
+        return ResponseEntity.ok().body(pessoa);
     }
 }

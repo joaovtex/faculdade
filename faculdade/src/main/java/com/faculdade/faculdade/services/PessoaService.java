@@ -1,4 +1,5 @@
 package com.faculdade.faculdade.services;
+import com.faculdade.faculdade.entities.Aluno;
 import com.faculdade.faculdade.entities.Pessoa;
 import com.faculdade.faculdade.repositories.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,11 @@ import java.util.Optional;
 public class PessoaService {
     @Autowired
     PessoaRepository pessoaRepository;
+
+    public Pessoa findById(Integer id) {
+        Optional<Pessoa> pessoa = pessoaRepository.findById((id));
+        return pessoa.orElse(null);
+    }
 
     public List<Pessoa> findAll() {
         List<Pessoa> pessoas = pessoaRepository.findAll();
@@ -26,5 +32,20 @@ public class PessoaService {
     public Pessoa findByCpf(String cpf) {
         Optional <Pessoa> pessoa = pessoaRepository.findByCpf(cpf);
         return  pessoa.orElse(null);
+    }
+
+    public Pessoa gravarPessoa(Pessoa pessoa) { return pessoaRepository.save(pessoa); }
+
+    public void deletar(Integer id) {
+        pessoaRepository.deleteById(id);
+    }
+
+    public Pessoa updatePessoa(Integer id, Pessoa pessoa) {
+        Pessoa alterado = findById(id);
+        if(alterado != null) {
+            alterado.setNome(pessoa.getNome());
+            alterado.setCpf(pessoa.getCpf());
+        }
+        return pessoaRepository.save(alterado);
     }
 }
