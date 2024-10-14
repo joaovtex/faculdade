@@ -27,27 +27,4 @@ public class PessoaService {
         Optional <Pessoa> pessoa = pessoaRepository.findByCpf(cpf);
         return  pessoa.orElse(null);
     }
-
-    public Pessoa findById(Integer id) {
-        Optional<Pessoa> pessoa = pessoaRepository.findById((id));
-        return pessoa.orElse(null);
-    }
-
-    public Pessoa gravarPessoa(Pessoa pessoa) {
-        return pessoaRepository.save(pessoa);
-    }
-
-    public void deletar(Integer id) {
-        pessoaRepository.deleteById(id);
-    }
-
-    public Pessoa updatePessoa(Integer id, Pessoa pessoa) {
-        Pessoa alterado = findById(id);
-        if(alterado != null) {
-            alterado.setNome(pessoa.getNome());
-            alterado.setCpf(pessoa.getCpf());
-
-        }
-        return pessoaRepository.save(alterado);
-    }
 }
